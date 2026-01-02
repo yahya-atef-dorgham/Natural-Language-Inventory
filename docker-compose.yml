@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend_python
+      dockerfile: Dockerfile
+    container_name: nl-inventory-backend
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      DB_PATH: /app/data/inventory.db
+      CORS_ORIGIN: http://localhost:80
+      LOG_LEVEL: info
+    ports:
+      - "3001:3001"
+    volumes:
+      - backend_data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/api/nl-queries"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: nl-inventory-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  backend_data:
+

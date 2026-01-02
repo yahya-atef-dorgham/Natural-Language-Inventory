@@ -1,0 +1,11 @@
+node_modules/
+dist/
+tests/
+*.log
+.env
+.env.local
+.git/
+.gitignore
+*.md
+specs/
+

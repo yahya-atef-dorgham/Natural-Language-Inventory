@@ -1,50 +1,44 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Inventory NL Dashboard Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Spec-Kit First
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+All feature work for this project MUST be driven by Spec-Kit flows. Specifications are the source of truth and MUST be created and updated via the `/speckit.*` commands and associated scripts, not by ad‑hoc editing.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### II. Specification Before Implementation
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+Before implementing or changing behavior, agents MUST ensure there is an up‑to‑date feature spec covering user scenarios, requirements, and success criteria. If no spec exists, they MUST create one using `/speckit.specify` before proceeding.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### III. Technology-Agnostic Specs (NON-NEGOTIABLE)
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+All specifications MUST describe **what** and **why** from a user and business perspective, and MUST NOT prescribe implementation details (languages, frameworks, libraries, APIs, or storage technologies).
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### IV. Reflection Pattern for NL→SQL
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+Any feature that involves natural language to database querying MUST follow a three-step reflection pattern:
+- Step 1 (Draft): Generate an initial internal query based on schema and user intent.  
+- Step 2 (Critique/Self-Correction): Perform a self-review for syntactic correctness, safety (no data modification or escalation of access), and basic performance safeguards.  
+- Step 3 (Finalization): Only execute the refined query after it passes the self-review; otherwise adjust or reject with a clear explanation.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### V. Safety and Least Privilege
+
+All data access derived from natural language MUST be read-only and constrained by existing authorization rules. Broad or ambiguous queries MUST be narrowed using reasonable defaults or rejected with guidance instead of running unbounded operations.
+
+## Additional Constraints
+
+- All `/speckit.specify`, `/speckit.clarify`, and `/speckit.plan` flows MUST respect the Spec-Kit templates and section requirements.  
+- Specs MUST avoid embedding checklists; quality checklists belong in separate checklist files under the corresponding feature directory.  
+- Assumptions MUST be documented in the spec when making reasonable defaults instead of asking for clarification.
+
+## Development Workflow & Quality Gates
+
+- New work starts from an existing spec branch created by `.specify/scripts/powershell/create-new-feature.ps1`.  
+- Agents MUST keep the spec and its checklist in sync before moving from specification to planning or implementation.  
+- When validation reveals gaps (unclear requirements, missing success criteria), agents MUST update the spec before treating the feature as ready for planning.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution supersedes ad‑hoc practices for this project. Any changes to these mandatory instructions MUST be documented in a dedicated amendment commit and briefly recorded at the top of the constitution file.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2025-12-23 | **Last Amended**: 2025-12-23
