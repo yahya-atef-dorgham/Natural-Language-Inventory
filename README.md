@@ -147,7 +147,7 @@ npm test
 
 ```
 .
-├── backend/
+├── backend_python/
 │   ├── src/
 │   │   ├── api/          # HTTP endpoints and routing
 │   │   ├── models/       # Data models
@@ -194,4 +194,3 @@ npm run preview
 ## License
 
 ISC
-
